@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>三阶魔方最优化复原</title>
+  <link rel="stylesheet" href="/src/styles.css">
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>三阶魔方最优化复原</h1>
+    </header>
+
+    <main>
+      <!-- Left: Color palette + controls -->
+      <section id="input-section">
+        <h2>涂色填写</h2>
+        <p class="hint">选颜色 → 点击魔方涂色。<b>不选颜色时，直接拖魔方即可转层</b>；拖空白转视角。右键/Shift 也可转层。加载中也能涂色。</p>
+        <div class="method-selector">
+          <label for="method-select">解法：</label>
+          <select id="method-select">
+            <option value="kociemba" selected>Kociemba 两阶段（最优）</option>
+            <option value="lbl">层先法（新手 7 阶段）</option>
+            <option value="roux">桥式（Roux 4 阶段）</option>
+          </select>
+        </div>
+        <div id="color-palette" class="color-palette"></div>
+        <div id="status" class="validation-status incomplete">
+          <span>○</span> 还需填写 48 个色块
+        </div>
+        <button class="btn-primary" id="solve-btn" disabled>求解</button>
+        <div class="btn-row">
+          <button class="btn-secondary" id="reset-btn">清空</button>
+          <button class="btn-secondary" id="solved-btn">标准魔方</button>
+        </div>
+        <div class="btn-row">
+          <select id="scramble-range" title="随机打乱步数范围">
+            <option value="25-30" selected>打乱 25~30 步</option>
+            <option value="30-40">打乱 30~40 步</option>
+            <option value="40-50">打乱 40~50 步</option>
+            <option value="50-60">打乱 50~60 步</option>
+            <option value="60-80">打乱 60~80 步</option>
+          </select>
+          <button class="btn-secondary" id="random-btn">随机打乱</button>
+        </div>
+      </section>
+
+      <!-- Center: 3D Cube (input + visualization) -->
+      <section id="visual-section">
+        <div id="three-canvas">
+          <div id="loading-badge" style="display:none;">
+            <div class="spinner"></div>
+            <span>引擎加载中，可先涂色</span>
+          </div>
+          <div id="canvas-toolbar">
+            <button id="reset-view-btn" class="toolbar-btn" title="重置视角">⟳ 视角</button>
+          </div>
+        </div>
+        <div id="playback-controls" style="display:none;">
+          <button id="play-btn">播放</button>
+          <button id="pause-btn">暂停</button>
+          <button id="prev-btn">上一步</button>
+          <button id="next-btn">下一步</button>
+          <select id="speed-select">
+            <option value="0.5">0.5x</option>
+            <option value="1" selected>1x</option>
+            <option value="2">2x</option>
+            <option value="4">4x</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- Right: Solution Steps -->
+      <section id="solution-section">
+        <h2>步骤<span id="phase-tag" class="phase-tag" style="display:none;"></span></h2>
+        <div id="solution-info"></div>
+        <div id="mode-tabs" style="display:none;">
+          <button id="tab-scramble" class="mode-tab">打乱步骤</button>
+          <button id="tab-solve" class="mode-tab">复原步骤</button>
+        </div>
+        <div id="step-list" class="step-list">
+          <p class="empty-hint">在 3D 魔方上点击涂色后点击「求解」</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
